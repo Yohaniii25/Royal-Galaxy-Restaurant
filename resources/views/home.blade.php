@@ -199,7 +199,7 @@ https://templatemo.com/tm-558-klassy-cafe
     <!-- ***** About Area Ends ***** -->
 
     <!-- ***** Menu Area Starts ***** -->
-    @
+    @include("food")
 
     <!-- ***** Menu Area Ends ***** -->
 
