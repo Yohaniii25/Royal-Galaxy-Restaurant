@@ -6,21 +6,28 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\User;
+use App\Models\Food;
+
 class HomeController extends Controller
 {
-    public function index(){
-
-        return view("home");
+    public function index()
+    {
+        $data = food::all();
+        return view("home", compact("data"));
     }
 
-    public function redirects(){
+    public function redirects()
+    {
+        $data=food::all();
 
-        $usertype= Auth::user()->usertype;
-        if($usertype==1) {
+        $usertype = Auth::user()->usertype;
+
+        if ($usertype == 1) {
             return view('admin.adminhome');
-        }
-        else {
-            return view("home");
+        } else {
+            // To view the food to the user
+            return view("home", compact("data"));
         }
     }
 }
