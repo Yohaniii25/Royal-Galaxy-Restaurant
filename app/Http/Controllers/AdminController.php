@@ -26,9 +26,18 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
+    public function deletemenu($id)
+    {
+        $data = food::find($id);
+        $data->delete();
+
+        return redirect()->back();
+    }
+
     public function foodmenu()
     {
-        return view("admin.foodmenu");
+        $data = food::all();
+        return view("admin.foodmenu", compact("data"));
     }
 
     public function upload(Request $request)
@@ -43,15 +52,14 @@ class AdminController extends Controller
         $data->image = $imagename;
 
         // title cames from database
-        $data->title=$request->title;
+        $data->title = $request->title;
 
-        $data->price=$request->price;
+        $data->price = $request->price;
 
-        $data->description=$request->description;
+        $data->description = $request->description;
 
         $data->save();
 
         return redirect()->back();
-
     }
 }
