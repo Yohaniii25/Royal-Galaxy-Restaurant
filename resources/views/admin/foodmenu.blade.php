@@ -15,7 +15,7 @@
 
         @include("admin.navbar")
 
-        <div style="position:relative; top: 60px; right:-150px">
+        <div style="top: 80px; right:-100px; position:relative;">
             <form action="{{url('/uploadfood')}}" method="post" enctype="multipart/form-data">
 
                 @csrf
@@ -55,13 +55,15 @@
             <br>
 
             <div>
-                <table bgcolor="black">
-                    <tr align="center">
-                        <th style="padding: 30px">Food Name</th>
-                        <th style="padding: 30px">Price</th>
-                        <th style="padding: 30px">Description</th>
-                        <th style="padding: 30px">Image</th>
-                        <th style="padding: 30px">Action</th>
+                <table bgcolor="black" align="center">
+                    <tr style="background-color: #000033;" align="center">
+
+                        <th style="padding: 25px">Food Name</th>
+                        <th style="padding: 25px">Price</th>
+                        <th style="padding: 25px">Description</th>
+                        <th style="padding: 25px">Image</th>
+                        <th style="padding: 25px">Delete</th>
+                        <th style="padding: 25px">Update</th>
                     </tr>
                     @foreach($data as $data)
                     <tr align="center">
@@ -72,8 +74,10 @@
                         <td><img height="170" width="170" src="/foodimage/{{$data->image}}"></td>
 
                         <td><a href="{{url('/deletemenu',$data->id)}}">Delete</a></td>
-                  
-                    @endforeach
+
+                        <td><a href="{{url('/updatemenu',$data->id)}}">Update</a></td>
+
+                        @endforeach
                 </table>
                 <br><br><br><br>
             </div>
