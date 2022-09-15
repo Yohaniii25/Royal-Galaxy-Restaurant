@@ -28,13 +28,15 @@ class HomeController extends Controller
     {
         $data = food::all();
 
+        $data2 = foodchef::all();
+
         $usertype = Auth::user()->usertype;
 
         if ($usertype == 1) {
             return view('admin.adminhome');
         } else {
             // To view the food to the user
-            return view("home", compact("data"));
+            return view("home", compact("data", "data2"));
         }
     }
 }

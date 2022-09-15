@@ -16,7 +16,7 @@
                 @foreach($data as $data)
 
                 <div class="item">
-                    
+
                     <div style="background-image: url('/foodimage/{{$data->image}}');" class='card'>
                         <div class="price">
                             <h6>{{$data->price}}</h6>
