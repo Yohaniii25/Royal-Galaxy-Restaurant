@@ -18,39 +18,50 @@ use App\Http\Controllers\AdminController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-Route::get('/', [HomeController::class, 'index']);
 
-Route::get('/users', [AdminController::class, 'user']);
+Route::middleware('auth')->group(function () {
+    Route::get('/', [HomeController::class, 'index']);
 
-Route::get('/deletemenu/{id}', [AdminController::class, 'deletemenu']);
+    Route::get('/redirects', [HomeController::class, 'redirects']);
 
-Route::get('/updatemenu/{id}', [AdminController::class, 'updatemenu']);
 
-Route::post('/update/{id}', [AdminController::class, 'update']);
+    Route::get('/users', [AdminController::class, 'user']);
 
-Route::get('/foodmenu', [AdminController::class, 'foodmenu']);
+    Route::get('/deletemenu/{id}', [AdminController::class, 'deletemenu']);
 
-Route::post('/uploadfood', [AdminController::class, 'upload']);
+    Route::get('/updatemenu/{id}', [AdminController::class, 'updatemenu']);
 
-Route::get('/deleteuser/{id}', [AdminController::class, 'deleteuser']);
+    Route::post('/update/{id}', [AdminController::class, 'update']);
 
-Route::get('/redirects', [HomeController::class, 'redirects']);
+    Route::get('/foodmenu', [AdminController::class, 'foodmenu']);
 
-Route::post('/reservation', [AdminController::class, 'reservation']);
+    Route::post('/uploadfood', [AdminController::class, 'upload']);
 
-Route::get('/viewreservation', [AdminController::class, 'viewreservation']);
+    Route::get('/deleteuser/{id}', [AdminController::class, 'deleteuser']);
 
-Route::get('/viewchef', [AdminController::class, 'viewchef']);
 
-Route::post('/uploadchef', [AdminController::class, 'uploadchef']);
+    Route::post('/reservation', [AdminController::class, 'reservation']);
 
-Route::middleware([
+    Route::get('/viewreservation', [AdminController::class, 'viewreservation']);
 
-    'auth:sanctum',
-    config('jetstream.auth_session'), 'verified',
-])->group(function () {
+    Route::get('/viewchef', [AdminController::class, 'viewchef']);
 
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::post('/uploadchef', [AdminController::class, 'uploadchef']);
+
+    Route::get('/updatechef/{id}', [AdminController::class, 'updatechef']);
+
+    Route::post('/updatefoodchef/{id}', [AdminController::class, 'updatefoodchef']);
+
+    Route::get('/deletechef/{id}', [AdminController::class, 'deletechef']);
+
+    Route::middleware([
+
+        'auth:sanctum',
+        config('jetstream.auth_session'), 'verified',
+    ])->group(function () {
+
+        Route::get('/dashboard', function () {
+            return view('dashboard');
+        })->name('dashboard');
+    });
 });
