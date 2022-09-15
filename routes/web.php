@@ -20,9 +20,12 @@ use App\Http\Controllers\AdminController;
 // });
 
 Route::middleware('auth')->group(function () {
+
     Route::get('/', [HomeController::class, 'index']);
 
     Route::get('/redirects', [HomeController::class, 'redirects']);
+
+    Route::post('/addcart/{id}', [HomeController::class, 'addcart']);
 
 
     Route::get('/users', [AdminController::class, 'user']);
@@ -39,7 +42,6 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/deleteuser/{id}', [AdminController::class, 'deleteuser']);
 
-
     Route::post('/reservation', [AdminController::class, 'reservation']);
 
     Route::get('/viewreservation', [AdminController::class, 'viewreservation']);
@@ -53,6 +55,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/updatefoodchef/{id}', [AdminController::class, 'updatefoodchef']);
 
     Route::get('/deletechef/{id}', [AdminController::class, 'deletechef']);
+
+
 
     Route::middleware([
 

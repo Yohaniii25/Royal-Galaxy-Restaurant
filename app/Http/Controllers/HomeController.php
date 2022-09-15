@@ -13,6 +13,8 @@ use App\Models\Food;
 
 use App\Models\Foodchef;
 
+use App\Models\Cart;
+
 class HomeController extends Controller
 {
     public function index()
@@ -21,7 +23,9 @@ class HomeController extends Controller
 
         $data2 = foodchef::all();
 
-        return view("home", compact("data", "data2"));
+        $count = cart::all()->count();
+
+        return view("home", compact("data", "data2","count"));
     }
 
     public function redirects()
@@ -33,10 +37,45 @@ class HomeController extends Controller
         $usertype = Auth::user()->usertype;
 
         if ($usertype == 1) {
+
             return view('admin.adminhome');
         } else {
             // To view the food to the user
-            return view("home", compact("data", "data2"));
+
+            // getting user id
+            $user_id = Auth::id();
+
+            $count = cart::where('user_id', $user_id)->count();
+
+            return view("home", compact('data', 'data2','count'));
+        }
+    }
+
+    public function addcart(Request $request, $id)
+    {
+
+        // to check that user logged or not
+        if (Auth::id()) {
+
+            $user_id = Auth::id();
+
+            $foodid = $id;
+
+            $quantity = $request->quantity;
+
+            $cart = new cart;
+
+            $cart->user_id = $user_id;
+
+            $cart->food_id = $foodid;
+
+            $cart->quantity = $quantity;
+
+            $cart->save();
+
+            return redirect()->back();
+        } else {
+            return redirect('/login');
         }
     }
 }
