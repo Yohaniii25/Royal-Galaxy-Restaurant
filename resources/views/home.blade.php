@@ -88,15 +88,20 @@ https://templatemo.com/tm-558-klassy-cafe
 
                                     @auth
 
-                                    Cart{{$count}}
+                                    <a href="{{url('/showcart',Auth::user()->id)}}">
+
+                                        Cart{{$count}}
+
+                                    </a>
 
                                     @endauth
 
                                     @guest
 
-                                    Cart[0]
+                                    cart[0]
 
                                     @endguest
+
                                 </a></li>
 
                             <li>

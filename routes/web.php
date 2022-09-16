@@ -27,6 +27,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/addcart/{id}', [HomeController::class, 'addcart']);
 
+    Route::get('/showcart/{id}', [HomeController::class, 'showcart']);
+
 
     Route::get('/users', [AdminController::class, 'user']);
 
@@ -55,6 +57,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/updatefoodchef/{id}', [AdminController::class, 'updatefoodchef']);
 
     Route::get('/deletechef/{id}', [AdminController::class, 'deletechef']);
+
+
 
 
 

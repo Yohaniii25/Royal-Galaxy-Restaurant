@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
@@ -19,13 +18,15 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $data = food::all();
+        if (Auth::id()) {
+            return redirect('redirects');
+        } else
+
+            $data = food::all();
 
         $data2 = foodchef::all();
 
-        $count = cart::all()->count();
-
-        return view("home", compact("data", "data2","count"));
+        return view('home', compact('data', 'data2'));
     }
 
     public function redirects()
@@ -37,7 +38,6 @@ class HomeController extends Controller
         $usertype = Auth::user()->usertype;
 
         if ($usertype == 1) {
-
             return view('admin.adminhome');
         } else {
             // To view the food to the user
@@ -47,23 +47,21 @@ class HomeController extends Controller
 
             $count = cart::where('user_id', $user_id)->count();
 
-            return view("home", compact('data', 'data2','count'));
+            return view('home', compact('data', 'data2', 'count'));
         }
     }
 
     public function addcart(Request $request, $id)
     {
-
         // to check that user logged or not
         if (Auth::id()) {
-
             $user_id = Auth::id();
 
             $foodid = $id;
 
             $quantity = $request->quantity;
 
-            $cart = new cart;
+            $cart = new cart();
 
             $cart->user_id = $user_id;
 
@@ -76,6 +74,24 @@ class HomeController extends Controller
             return redirect()->back();
         } else {
             return redirect('/login');
+        }
+    }
+
+    public function showcart(Request $request, $id)
+    {
+
+        $count = cart::where('user_id', $id)->count();
+
+        if (Auth::id() == $id) {
+
+            $data2 = cart::select('*')->where('user_id', '=', $id)->get();
+
+            $data = cart::where('user_id', $id)->join('food', 'carts.food_id', '=', 'food.id')->get();
+
+            return view('showcart', compact('count', 'data', 'data2'));
+        } else {
+
+            return redirect()->back();
         }
     }
 }

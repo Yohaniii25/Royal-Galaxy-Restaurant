@@ -46,7 +46,7 @@
 
                 <div>
 
-                    <input style="color: black; background-color:white" type="submit" value="Save">
+                    <input style="color: black; background-color:white" type="submit" value="Save" class="btn btn-">
 
                 </div>
 
@@ -73,9 +73,9 @@
                         <td>{{$data->description}}</td>
                         <td><img height="170" width="170" src="/foodimage/{{$data->image}}"></td>
 
-                        <td><a href="{{url('/deletemenu',$data->id)}}">Delete</a></td>
+                        <td><a href="{{url('/deletemenu',$data->id)}}" class="btn btn-danger">Delete</a></td>
 
-                        <td><a href="{{url('/updatemenu',$data->id)}}">Update</a></td>
+                        <td><a href="{{url('/updatemenu',$data->id)}}" class="btn btn-inverse-primary">Update</a></td>
 
                         @endforeach
                 </table>
