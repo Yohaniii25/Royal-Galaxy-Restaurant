@@ -12,6 +12,13 @@ use App\Models\Reservation;
 
 use App\Models\Foodchef;
 
+use App\Models\Order;
+
+use Illuminate\Support\Facades\Auth;
+
+
+
+
 class AdminController extends Controller
 {
     public function user()
@@ -123,8 +130,20 @@ class AdminController extends Controller
 
     public function viewreservation()
     {
-        $data = reservation::all();
-        return view("admin.adminreservation", compact("data"));
+        if(Auth::id()) {
+
+            $data = reservation::all();
+
+            return view("admin.adminreservation", compact("data"));
+
+        }
+
+        else {
+
+            return redirect('login');
+        }
+        
+        
     }
 
     public function viewchef()
@@ -188,5 +207,21 @@ class AdminController extends Controller
         $data = foodchef::find($id);
         $data->delete();
         return redirect()->back();
+    }
+
+    public function orders()
+    {
+
+        $data =order::all();
+        return view('admin.orders',compact('data'));
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->search;
+
+        $data =order::where('name','Like','%'.$search.'%')->orWhere('foodname','Like','%'.$search.'%')->get();
+
+        return view('admin.orders',compact('data'));
     }
 }

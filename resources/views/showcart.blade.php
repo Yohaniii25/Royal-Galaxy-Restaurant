@@ -31,6 +31,8 @@ https://templatemo.com/tm-558-klassy-cafe
 
     <link rel="stylesheet" href="assets/css/lightbox.css">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 </head>
 
 <body>
@@ -142,67 +144,130 @@ https://templatemo.com/tm-558-klassy-cafe
                 <th style="padding: 30px;">Food Name</th>
                 <th style="padding: 30px;">Price</th>
                 <th style="padding: 30px;">Quantity</th>
-                <th style="padding: 30px;">Remove</th>
+                <th style="padding: 30px;">Action</th>
             </tr>
 
-            @foreach($data as $data)
+            <form action="{{url('/orderconfirm')}}" method="post">
 
-            <tr align="center">
-                <td>{{$data->title}}</td>
-                <td>{{$data->price}}</td>
-                <td>{{$data->quantity}}</td>
-            </tr>
+            @csrf
 
-            @endforeach
+                @foreach($data as $data)
 
-            @foreach($data2 as $data2)
+                <tr align="center">
+                    <td>
+                        <input type="text" name="foodname[]" value="{{$data->title}}" hidden="">
+                        {{$data->title}}
+                    </td>
+                    <td>
+                    <input type="text" name="price[]" value="{{$data->price}}" hidden="">
+                        {{$data->price}}
+                    </td>
+                    <td>
+                    <input type="text" name="quantity[]" value="{{$data->quantity}}" hidden="">
+                        {{$data->quantity}}
+                    </td>
+                </tr>
 
-            <td><a href="$data->id" class="btn btn-warning">Remove</a></td>
 
-            @endforeach
+                @endforeach
+
+                @foreach($data2 as $data2)
+
+                <tr style="position: relative; top: -110px; right: -380px">
+
+                    <td>
+                        <a href="{{url('/remove',$data2->id)}}" class="btn btn-warning">Remove</a>
+                    </td>
+                </tr>
+
+                @endforeach
+
+
         </table>
 
-    </div>
+        <div align="center" style="padding: 10px;">
+            <button style="background-color: #007bff;" class="btn btn-primary" id="order" type="button">Order Now</button>
+        </div>
+
+        <div id="appear" align="center" style="padding: 10px; display: none;">
+
+            <div style="padding: 10px;">
+                <label>Name</label>
+                <input type="text" name="name" placeholder="Full Name">
+            </div>
+
+            <div style="padding: 10px;">
+                <label>Phone</label>
+                <input type="text" name="phone" placeholder="Phone Number">
+            </div>
+
+            <div style="padding: 10px;">
+                <label>Address</label>
+                <input type="text" name="address" placeholder="Address">
+            </div>
+
+            <div style="padding: 10px;">
+                <input style="background-color: #28a745;" class="btn btn-success" type="submit" value="Order Confirm">
+
+                <button type="button" id="close" class="btn btn-danger">Close</button>
+            </div>
+        </div>
+        </form>
+
+
+        <script type="text/javascript">
+            $("#order").click(
+                function() {
+                    $("#appear").show();
+                }
+            );
+
+            $("#close").click(
+                function() {
+                    $("#appear").hide();
+                }
+            );
+        </script>
 
 
 
 
-    <!-- jQuery -->
-    <script src="assets/js/jquery-2.1.0.min.js"></script>
+        <!-- jQuery -->
+        <script src="assets/js/jquery-2.1.0.min.js"></script>
 
-    <!-- Bootstrap -->
-    <script src="assets/js/popper.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
+        <!-- Bootstrap -->
+        <script src="assets/js/popper.js"></script>
+        <script src="assets/js/bootstrap.min.js"></script>
 
-    <!-- Plugins -->
-    <script src="assets/js/owl-carousel.js"></script>
-    <script src="assets/js/accordions.js"></script>
-    <script src="assets/js/datepicker.js"></script>
-    <script src="assets/js/scrollreveal.min.js"></script>
-    <script src="assets/js/waypoints.min.js"></script>
-    <script src="assets/js/jquery.counterup.min.js"></script>
-    <script src="assets/js/imgfix.min.js"></script>
-    <script src="assets/js/slick.js"></script>
-    <script src="assets/js/lightbox.js"></script>
-    <script src="assets/js/isotope.js"></script>
+        <!-- Plugins -->
+        <script src="assets/js/owl-carousel.js"></script>
+        <script src="assets/js/accordions.js"></script>
+        <script src="assets/js/datepicker.js"></script>
+        <script src="assets/js/scrollreveal.min.js"></script>
+        <script src="assets/js/waypoints.min.js"></script>
+        <script src="assets/js/jquery.counterup.min.js"></script>
+        <script src="assets/js/imgfix.min.js"></script>
+        <script src="assets/js/slick.js"></script>
+        <script src="assets/js/lightbox.js"></script>
+        <script src="assets/js/isotope.js"></script>
 
-    <!-- Global Init -->
-    <script src="assets/js/custom.js"></script>
-    <script>
-        $(function() {
-            var selectedClass = "";
-            $("p").click(function() {
-                selectedClass = $(this).attr("data-rel");
-                $("#portfolio").fadeTo(50, 0.1);
-                $("#portfolio div").not("." + selectedClass).fadeOut();
-                setTimeout(function() {
-                    $("." + selectedClass).fadeIn();
-                    $("#portfolio").fadeTo(50, 1);
-                }, 500);
+        <!-- Global Init -->
+        <script src="assets/js/custom.js"></script>
+        <script>
+            $(function() {
+                var selectedClass = "";
+                $("p").click(function() {
+                    selectedClass = $(this).attr("data-rel");
+                    $("#portfolio").fadeTo(50, 0.1);
+                    $("#portfolio div").not("." + selectedClass).fadeOut();
+                    setTimeout(function() {
+                        $("." + selectedClass).fadeIn();
+                        $("#portfolio").fadeTo(50, 1);
+                    }, 500);
 
+                });
             });
-        });
-    </script>
+        </script>
 </body>
 
 </html>
